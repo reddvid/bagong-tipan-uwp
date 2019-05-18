@@ -36,11 +36,11 @@ namespace BagongTipan.UWP.ViewModels
         {
             get => _selectedBook;
             set
-            {   
+            {
                 Set(ref _selectedBook, value);
                 LoadChapters();
             }
-        }                
+        }
 
         private string _selectedChapter;
 
@@ -51,6 +51,25 @@ namespace BagongTipan.UWP.ViewModels
             {
                 Set(ref _selectedChapter, value);
                 LoadVerses();
+                CheckButtons();
+            }
+        }
+
+        private void CheckButtons()
+        {
+            IsLastChapter = IsFirstChapter = false;
+
+            int index = Books.IndexOf(Books.Where(p => p.Equals(SelectedBook)).FirstOrDefault());
+            int count = ChapterCount[index];
+
+            if (SelectedChapter == count.ToString())
+            {
+                IsLastChapter = true;
+            }
+
+            if (SelectedChapter == "1")
+            {
+                IsFirstChapter = true;
             }
         }
 
@@ -61,7 +80,8 @@ namespace BagongTipan.UWP.ViewModels
         {
             Chapters.Clear();
 
-            int count = ChapterCount[Books.IndexOf(Books.Where(p => p.Equals(SelectedBook)).FirstOrDefault())];
+            int index = Books.IndexOf(Books.Where(p => p.Equals(SelectedBook)).FirstOrDefault());
+            int count = ChapterCount[index];
             for (int c = 1; c <= count; c++)
             {
                 Chapters.Add(c.ToString());
@@ -79,13 +99,44 @@ namespace BagongTipan.UWP.ViewModels
             {
                 Contents.Add(verse);
             }
-            
-            //// Update header            
-            //if (cb_chapterselection.SelectedItem != null)
-            //    tb_kabanata.Text = "Kabanata " + cb_chapterselection.SelectedItem.ToString();
+        }
 
-            //// Check buttons
-            //CheckPageButtons();
+        //public bool IsPreviousButtonEnabled => !IsFirstChapter;
+
+        //public bool IsNextButtonEnabled => !IsLastChapter;
+
+        public void GoToPreviousChapter()
+        {
+            int index = Chapters.IndexOf(Chapters.Where(c => c.Equals(SelectedChapter)).FirstOrDefault());
+            SelectedChapter = Chapters[index - 1];
+        }
+
+        public void GoToNextChapter()
+        {
+            int index = Chapters.IndexOf(Chapters.Where(c => c.Equals(SelectedChapter)).FirstOrDefault());
+            SelectedChapter = Chapters[index + 1];
+        }
+
+        private bool _isFirstChapter;
+
+        public bool IsFirstChapter
+        {
+            get => !_isFirstChapter;
+            set
+            {
+                Set(ref _isFirstChapter, value);
+            }
+        }
+
+        private bool _isLastChapter;
+
+        public bool IsLastChapter
+        {
+            get => !_isLastChapter;
+            set
+            {
+                Set(ref _isLastChapter, value);
+            }
         }
 
         private Biblia BibleData;

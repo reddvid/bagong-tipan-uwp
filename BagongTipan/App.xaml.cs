@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -7,6 +10,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -31,6 +35,57 @@ namespace BagongTipan.UWP
         {          
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            AppCenter.Start("c77305fd-b65b-45a4-8f53-94ad0a58e0f6", typeof(Analytics));
+
+            CreateThemeSettings();
+        }
+
+        private void CreateThemeSettings()
+        {
+            var roamingSettings = ApplicationData.Current.RoamingSettings;
+
+            if (roamingSettings.Containers.ContainsKey("settings") == true)
+            {
+                // Retrieve settings and set the setting
+                var theme = roamingSettings.Containers["settings"].Values["apptheme"];
+
+                // set the initial SelectedItem 
+                if (theme != null)
+                {
+                    SetTheme(theme.ToString());
+                }
+            }
+            else
+            {
+                var container = roamingSettings.CreateContainer("settings", ApplicationDataCreateDisposition.Always);
+
+                // Create the key and save the theme setting
+                string myKey = "apptheme";
+
+                if (!roamingSettings.Containers["settings"].Values.ContainsKey(myKey))
+                {
+                    roamingSettings.Containers["settings"].Values.Add(myKey.ToString(), RequestedTheme.ToString());
+                }
+                else
+                {
+                    // Replace the key
+                    roamingSettings.Containers["settings"].Values.Remove(myKey.ToString());
+                    roamingSettings.Containers["settings"].Values.Add(myKey.ToString(), RequestedTheme.ToString());
+                }
+            }
+        }
+
+        private void SetTheme(string theme)
+        {
+            if (theme.Contains("Madilim"))
+            {
+                RequestedTheme = ApplicationTheme.Dark;
+            }
+            else if (theme.Contains("Maliwanag") || theme.Contains("Default"))
+            {
+                RequestedTheme = ApplicationTheme.Light;
+            }
         }
 
         /// <summary>

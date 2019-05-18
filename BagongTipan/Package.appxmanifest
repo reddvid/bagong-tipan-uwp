@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="32760RedDavid.TagalogBibleAngBagongTipan.UWPBeta" Publisher="CN=3CB88423-4D53-4969-9486-DE9585CE29EF" Version="1.1.2.0" />
-  <mp:PhoneIdentity PhoneProductId="20c740c4-6063-4756-bb93-51debea5c22d" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="32760RedDavid.TagalogBibleAngBagongTipan" Publisher="CN=3CB88423-4D53-4969-9486-DE9585CE29EF" Version="2.0.1.0" />
+  <mp:PhoneIdentity PhoneProductId="65ccd361-1a48-4bbb-affc-bd342d50c553" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Tagalog Bible (Ang Bagong Tipan)</DisplayName>
     <PublisherDisplayName>Red David</PublisherDisplayName>
     <Logo>Assets\NewStoreLogo.png</Logo>
   </Properties>
   <Dependencies>
-    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.17763.0" />
   </Dependencies>
   <Resources>
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="BagongTipan.UWP.App">
-      <uap:VisualElements DisplayName="Ang Bagong Tipan β" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="BagongTipan.UWP" BackgroundColor="transparent">
+      <uap:VisualElements DisplayName="Ang Bagong Tipan" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="BagongTipan.UWP" BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square310x310Logo="Assets\Square310x310Logo.png" Square71x71Logo="Assets\Square71x71Logo.png" ShortName="Ang Bagong Tipan">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />
