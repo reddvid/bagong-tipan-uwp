@@ -99,13 +99,7 @@ namespace BagongTipan.UWP
             //if (cb_chapterselection.Items != null)
             //    cb_chapterselection.SelectedIndex = 0;
         }
-
-        private void lv_books_Loaded(object sender, RoutedEventArgs e)
-        {
-            //if ((sender as ListView).Items != null)
-            //    (sender as ListView).SelectedIndex = 0;
-        }
-
+    
         private void cb_chapterselection_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //// Get data from json databank and set it to itemsource of listview
@@ -178,7 +172,7 @@ namespace BagongTipan.UWP
             var tappedItem = (UIElement)e.OriginalSource;
 
             // Set highlight
-            lv_verselist.SelectedIndex = lv_verselist.Items.IndexOf((senderElement).DataContext);
+            //lv_verselist.SelectedIndex = lv_verselist.Items.IndexOf((senderElement).DataContext);
 
             var attachedFlyout = (MenuFlyout)FlyoutBase.GetAttachedFlyout(senderElement);
             attachedFlyout.ShowAt(tappedItem, e.GetPosition(tappedItem));
@@ -221,11 +215,6 @@ namespace BagongTipan.UWP
         private void btn_about_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(AboutPage));
-        }
-
-        private void ListView_Loaded(object sender, RoutedEventArgs e)
-        {
-            //ViewModel.SelectedBook = (sender as ListView).Items.FirstOrDefault() as string;
         }
 
         Compositor _compositor = Window.Current.Compositor;

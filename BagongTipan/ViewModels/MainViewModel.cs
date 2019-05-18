@@ -20,6 +20,8 @@ namespace BagongTipan.UWP.ViewModels
 
         public MainViewModel()
         {
+            LoadData();
+
             var books = new Books();
 
             Books = books.BooksList;
@@ -38,9 +40,7 @@ namespace BagongTipan.UWP.ViewModels
                 Set(ref _selectedBook, value);
                 LoadChapters();
             }
-        }
-
-        
+        }                
 
         private string _selectedChapter;
 
@@ -54,16 +54,8 @@ namespace BagongTipan.UWP.ViewModels
             }
         }
 
-        public ObservableCollection<string> Chapters { get; } = new ObservableCollection<string>(); //_chapters;// = new List<string>();
-
-        //public List<string> Chapters
-        //{
-        //    get => _chapters;
-        //    set
-        //    {
-        //        Set(ref _chapters, value);
-        //    }
-        //}
+        public ObservableCollection<string> Chapters { get; } = new ObservableCollection<string>();
+        public ObservableCollection<BibliaElement> Contents { get; } = new ObservableCollection<BibliaElement>();
 
         private void LoadChapters()
         {
@@ -74,20 +66,38 @@ namespace BagongTipan.UWP.ViewModels
             {
                 Chapters.Add(c.ToString());
             }
+
+            SelectedChapter = Chapters[0];
         }
 
         private void LoadVerses()
         {
+            Contents.Clear();
+
+            int selectedChapterIndex = Chapters.IndexOf(Chapters.Where(c => c.Equals(SelectedChapter)).FirstOrDefault()) + 1;
+            foreach (var verse in BibleData.BibliaBiblia.Where(bookName => bookName.Libro == SelectedBook).Where(chapter => chapter.Kabanata == selectedChapterIndex))  //BibleData.Bible.Where(x => x.BookTitle == (SelectedBook)).Where(i => i.Chapter == selectedChapterIndex.ToString()))
+            {
+                Contents.Add(verse);
+            }
             
+            //// Update header            
+            //if (cb_chapterselection.SelectedItem != null)
+            //    tb_kabanata.Text = "Kabanata " + cb_chapterselection.SelectedItem.ToString();
+
+            //// Check buttons
+            //CheckPageButtons();
         }
-        
+
+        private Biblia BibleData;
+
         public void LoadData()
         {
+            BibleData = null;
             string json = null;
+
             json = File.ReadAllText(@"DataBank.json");
 
-            var obj = JsonConvert.DeserializeObject<Biblia>(json);
-
+            BibleData = JsonConvert.DeserializeObject<Biblia>(json);
         }
     }
 }

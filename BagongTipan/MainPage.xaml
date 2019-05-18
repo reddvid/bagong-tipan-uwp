@@ -10,6 +10,7 @@
     xmlns:local="using:BagongTipan.UWP"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:Microsoft.Xaml.Interactions.Media"
+    xmlns:models="using:BagongTipan.UWP.Models"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -273,8 +274,12 @@
                 Storyboard.TargetName="TxbTitle"
                 Storyboard.TargetProperty="(UIElement.Opacity)"
                 From="0"
-                To="1" 
-                Duration="0:0:0.75" />
+                To="1"
+                Duration="0:0:0.75">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseIn" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
             <!--<DoubleAnimation
                 Storyboard.TargetName="TxbTitleScale"
                 Storyboard.TargetProperty="ScaleX"
@@ -298,9 +303,9 @@
             <DoubleAnimation
                 Storyboard.TargetName="TxbTitleTranslate"
                 Storyboard.TargetProperty="Y"
-                From="50"
+                From="30"
                 To="0"
-                Duration="0:0:0.5">
+                Duration="0:0:0.8">
                 <DoubleAnimation.EasingFunction>
                     <CubicEase EasingMode="EaseIn" />
                 </DoubleAnimation.EasingFunction>
@@ -355,29 +360,49 @@
             OpenPaneLength="280"
             PaneBackground="{ThemeResource SystemControlAcrylicElementMediumHighBrush}">
             <SplitView.Pane>
-                <ListView
-                    ItemsSource="{x:Bind ViewModel.Books}"
-                    SelectedItem="{x:Bind ViewModel.SelectedBook, Mode=TwoWay}"
-                    SelectionChanged="ListView_SelectionChanged"
-                    SelectionMode="Single">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock
-                                Grid.Column="1"
-                                Text="{Binding}"
-                                TextAlignment="Center"
-                                TextWrapping="WrapWholeWords" />
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="Padding" Value="48,6" />
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                </ListView>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        Margin="24,32,0,0"
+                        HorizontalAlignment="Left"
+                        FontFamily="Arial"
+                        FontSize="24"
+                        FontWeight="Bold"
+                        Style="{ThemeResource TitleTextBlockStyle}"
+                        Text="Mga Aklat"
+                        TextWrapping="Wrap" />
+                    <ListView
+                        Grid.Row="1"
+                        Margin="0,12,0,0"
+                        ItemsSource="{x:Bind ViewModel.Books}"
+                        SelectedItem="{x:Bind ViewModel.SelectedBook, Mode=TwoWay}"
+                        SelectionChanged="ListView_SelectionChanged"
+                        SelectionMode="Single">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Text="{Binding}"
+                                    TextAlignment="Center"
+                                    TextWrapping="WrapWholeWords" />
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Padding" Value="24,2" />
+                                <Setter Property="MinHeight" Value="24" />
+                                <Setter Property="Height" Value="28" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+                </Grid>
+
             </SplitView.Pane>
             <SplitView.Content>
-                <Grid Padding="24,32,24,0">
+                <Grid Padding="24,24,24,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
@@ -988,82 +1013,86 @@
                             </ListView.ItemContainerStyle>
                         </ListView>
                     </StackPanel>
-                    <RelativePanel Grid.Row="1">
-                        <ListView
-                            Name="lv_verselist"
-                            FontFamily="Segoe UI"
-                            IsItemClickEnabled="False"
-                            ItemsSource="{Binding Source={StaticResource csv2}}"
-                            Loaded="lv_verselist_Loaded"
-                            RelativePanel.AlignHorizontalCenterWithPanel="True"
-                            SelectionChanged="lv_verselist_SelectionChanged"
-                            SelectionMode="Single">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid
-                                        x:Name="g_verseitem"
-                                        Padding="24,4"
-                                        RightTapped="g_verseitem_RightTapped">
-                                        <FlyoutBase.AttachedFlyout>
-                                            <MenuFlyout>
-                                                <MenuFlyoutItem
-                                                    x:Name="btn_copyverse"
-                                                    Click="btn_copyverse_Click"
-                                                    Text="Kopyahin">
-                                                    <MenuFlyoutItem.Icon>
-                                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE16F;" />
-                                                    </MenuFlyoutItem.Icon>
-                                                </MenuFlyoutItem>
-                                                <MenuFlyoutItem
-                                                    x:Name="btn_shareverse"
-                                                    Click="btn_shareverse_Click"
-                                                    Text="I-share">
-                                                    <MenuFlyoutItem.Icon>
-                                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;" />
-                                                    </MenuFlyoutItem.Icon>
-                                                </MenuFlyoutItem>
-                                                <!--<MenuFlyoutSeparator />
+
+                    <ListView
+                        Grid.Row="1"
+                        Margin="0,12,0,0"
+                        ItemsSource="{x:Bind ViewModel.Contents, Mode=OneWay}"
+                        SelectionMode="Single">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid
+                                    x:Name="g_verseitem"
+                                    Padding="24,4"
+                                    Background="Transparent"
+                                    RightTapped="g_verseitem_RightTapped">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem
+                                                x:Name="btn_copyverse"
+                                                Click="btn_copyverse_Click"
+                                                Text="Kopyahin">
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE16F;" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem
+                                                x:Name="btn_shareverse"
+                                                Click="btn_shareverse_Click"
+                                                Text="I-share">
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
+                                            <!--<MenuFlyoutSeparator />
                                                      <MenuFlyoutItem x:Name="btn_bookmark" Text="I-bookmark" Click="btn_bookmark_Click">
                                                      <MenuFlyoutItem.Icon>
                                                      <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE224;" />
                                                      </MenuFlyoutItem.Icon>
                                                      </MenuFlyoutItem>-->
-                                            </MenuFlyout>
-                                        </FlyoutBase.AttachedFlyout>
-                                        <TextBlock
-                                            MaxWidth="720"
-                                            HorizontalAlignment="Left"
-                                            TextAlignment="Left"
-                                            TextWrapping="Wrap">
-                                            <TextBlock.Inlines>
-                                                <Run
-                                                    FontWeight="Bold"
-                                                    Foreground="{ThemeResource SystemControlBackgroundAccentBrush}"
-                                                    Text="{Binding index}" />
-                                                <Run Text="  " />
-                                                <Run FontSize="16" Text="{Binding verse}" />
-                                            </TextBlock.Inlines>
-                                        </TextBlock>
-                                    </Grid>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="ListViewItem">
-                                    <Setter Property="HorizontalAlignment" Value="Stretch" />
-                                    <Setter Property="MaxWidth" Value="720" />
-                                    <Setter Property="Padding" Value="48,6" />
-                                </Style>
-                            </ListView.ItemContainerStyle>
-                        </ListView>
-                        <adcontrol:AdControl
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                    <TextBlock
+                                        Margin="-99,-8,0,0"
+                                        HorizontalAlignment="Right"
+                                        FontSize="20"
+                                        FontWeight="Bold"
+                                        Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                        Text="{Binding Index}"
+                                        TextAlignment="Left" />
+
+                                    <TextBlock
+                                        MaxWidth="720" Grid.Column="1"
+                                        Margin="8,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        HorizontalTextAlignment="Start"
+                                        Text="{Binding Verse}"
+                                        TextAlignment="Left"
+                                        TextWrapping="Wrap" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="MaxWidth" Value="720" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+                    <!--<adcontrol:AdControl
                             Width="160"
                             Height="600"
                             Margin="24"
                             AdUnitId="1100017906"
                             ApplicationId="9p4n369p108d"
                             RelativePanel.AlignRightWithPanel="True"
-                            RelativePanel.AlignVerticalCenterWithPanel="True" />
-                    </RelativePanel>
+                            RelativePanel.AlignVerticalCenterWithPanel="True" />-->
                 </Grid>
             </SplitView.Content>
         </SplitView>
