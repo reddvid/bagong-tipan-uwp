@@ -25,6 +25,11 @@
     </Page.Resources>
 
     <Grid>
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <RepositionThemeTransition />
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
         <Grid.Resources>
             <Style TargetType="TextBlock">
                 <Setter Property="FontSize" Value="16" />
@@ -70,8 +75,8 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Margin="0,12,0,0" Spacing="12">
                     <TextBlock FontSize="16">
-                        <Run Text="{x:Bind ViewModel.AppVersion}" FontSize="14" />
-                        <Hyperlink Click="{x:Bind ViewModel.GoToStore}"> by Red David</Hyperlink>
+                        <Run FontSize="14" Text="{x:Bind ViewModel.AppVersion}" />
+                        <Hyperlink Click="{x:Bind ViewModel.GoToStore}">by Red David</Hyperlink>
                     </TextBlock>
                     <!--<HyperlinkButton Click="{x:Bind ViewModel.GoToStore}" Content="by Red David" />-->
                     <TextBlock Style="{StaticResource SubHeaderText}" Text="Tema ng kulay" />
@@ -99,7 +104,7 @@
                     Margin="24,48,0,0"
                     Spacing="12">
                     <TextBlock Style="{ThemeResource SubHeaderText}" Text="Social" />
-                    <TextBlock Text="Maging &quot;updated&quot; sa mga balita tungkol sa app na ito o sa iba ko pang gawang mga app. Bisitahin lang ang aking Facebook page or Twitter profile"/>
+                    <TextBlock Text="Maging &quot;updated&quot; sa mga balita tungkol sa app na ito o sa iba ko pang gawang mga app. Bisitahin lang ang aking Facebook page or Twitter profile" />
                     <HyperlinkButton Click="{x:Bind ViewModel.OpenFacebook}" Content="I-like sa Facebook" />
                     <HyperlinkButton Click="{x:Bind ViewModel.OpenTwitter}" Content="I-follow sa Twitter" />
                     <TextBlock Style="{ThemeResource SubHeaderText}" Text="Donasyon" />

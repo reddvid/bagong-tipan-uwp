@@ -128,7 +128,10 @@
     </AppxManifest>
     <None Include="BagongTipan_StoreKey.pfx" />
     <None Include="BagongTipan_TemporaryKey.pfx" />
+    <Content Include="Assets\abt3.png" />
+    <Content Include="Assets\abt3clr.png" />
     <Content Include="Assets\BagongTipan.png" />
+    <Content Include="Assets\BagongTipan2.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-125.png" />
     <Content Include="Assets\SplashScreen.scale-150.png" />

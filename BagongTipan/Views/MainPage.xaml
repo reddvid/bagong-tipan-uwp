@@ -64,12 +64,23 @@
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
         </Storyboard>
+        <Flyout x:Key="FontSizeFlyout" Placement="Top">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <SymbolIcon Symbol="FontDecrease" />
+                <SymbolIcon Grid.Column="2" Symbol="FontIncrease" />
+            </Grid>
+        </Flyout>
     </Page.Resources>
 
     <Grid>
         <Grid.ChildrenTransitions>
             <TransitionCollection>
-                <ReorderThemeTransition />
+                <RepositionThemeTransition />
             </TransitionCollection>
         </Grid.ChildrenTransitions>
         <SplitView
@@ -601,7 +612,7 @@
                         <!--  CHAPTER INDEX  -->
                         <ListView
                             Grid.Row="0"
-                            Margin="-4,0,0,0"
+                            Margin="-4,0,0,0" SelectionChanged="IndexListView_SelectionChanged"
                             ItemsSource="{x:Bind ViewModel.Chapters, Mode=OneWay}"
                             SelectedItem="{x:Bind ViewModel.SelectedChapter, Mode=TwoWay}">
                             <ListView.ItemTemplate>
@@ -1189,7 +1200,38 @@
                     </StackPanel>
 
                     <!--  VERSES  -->
-                    <ListView
+                    <ScrollViewer x:Name="VerseScroll" Grid.Row="1">
+                        <Grid Margin="0,12,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition x:Name="SpacerLeft" Width="2*" />
+                                <ColumnDefinition Width="7*" />
+                                <ColumnDefinition Width="7*" />
+                                <ColumnDefinition x:Name="SpacerRight" Width="2*" />
+                            </Grid.ColumnDefinitions>
+                            <RichTextBlock
+                                Grid.Column="1"
+                                Padding="12,0"
+                                VerticalAlignment="Top"
+                                FontSize="{x:Bind ViewModel.FontSize, Mode=OneWay}"
+                                LineHeight="25">
+                                <Paragraph>
+                                    <Run Text="{x:Bind ViewModel.StringifiedContents, Mode=OneWay}" />
+                                </Paragraph>
+                            </RichTextBlock>
+                            <RichTextBlock
+                                Grid.Column="2"
+                                Padding="12,0"
+                                VerticalAlignment="Top"
+                                FontSize="{x:Bind ViewModel.FontSize, Mode=OneWay}"
+                                LineHeight="25"
+                                TextTrimming="None">
+                                <Paragraph>
+                                    <Run Text="{x:Bind ViewModel.StringifiedContentsOnColumnTwo, Mode=OneWay}" />
+                                </Paragraph>
+                            </RichTextBlock>
+                        </Grid>
+                    </ScrollViewer>
+                    <!--<ListView
                         x:Name="VerseListView"
                         Grid.Row="1"
                         Margin="0,12,0,0"
@@ -1247,7 +1289,7 @@
                                 <Setter Property="MaxWidth" Value="720" />
                             </Style>
                         </ListView.ItemContainerStyle>
-                    </ListView>
+                    </ListView>-->
                     <!--  TODO: Move on top and make it smaller  -->
                     <!--<adcontrol:AdControl
                             Width="160"
@@ -1279,6 +1321,8 @@
                         <Setter Target="SplitView.(Grid.Row)" Value="1" />
                         <Setter Target="SplitView.(Grid.RowSpan)" Value="1" />
                         <Setter Target="SplitView.IsPaneOpen" Value="True" />
+                        <Setter Target="SpacerLeft.Width" Value="2*" />
+                        <Setter Target="SpacerRight.Width" Value="2*" />
                     </VisualState.Setters>
                 </VisualState>
 
@@ -1291,6 +1335,8 @@
                         <Setter Target="SplitView.(Grid.Row)" Value="0" />
                         <Setter Target="SplitView.(Grid.RowSpan)" Value="2" />
                         <Setter Target="SplitView.IsPaneOpen" Value="False" />
+                        <Setter Target="SpacerLeft.Width" Value="12" />
+                        <Setter Target="SpacerRight.Width" Value="12" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -1301,6 +1347,7 @@
         <CommandBar>
             <CommandBar.Content>
                 <AppBarButton
+                    x:Name="BottomHam"
                     Width="280"
                     Background="{ThemeResource InkToolbarAccentColorThemeBrush}"
                     Click="Hamburger_Click"
@@ -1329,8 +1376,25 @@
                                 Text="Talaan" />
                         </Grid>
                     </AppBarButton.Content>
+
                 </AppBarButton>
             </CommandBar.Content>
+            <!--<AppBarToggleButton
+                Click="AppBarToggleButton_Click"
+                FlyoutBase.AttachedFlyout="{StaticResource FontSizeFlyout}"
+                Icon="FontSize"
+                Label="First" />-->
+            <AppBarButton
+                Click="{x:Bind ViewModel.DecreaseFont}"
+                Icon="FontDecrease"
+                IsEnabled="{x:Bind ViewModel.IsSmallestFont, Mode=OneWay}"
+                Label="Liitan ang font" />
+            <AppBarButton
+                Click="{x:Bind ViewModel.IncreaseFont}"
+                Icon="FontIncrease"
+                IsEnabled="{x:Bind ViewModel.IsLargestFont, Mode=OneWay}"
+                Label="Lakihan ang font" />
+            <AppBarSeparator />
             <AppBarButton
                 Click="{x:Bind ViewModel.GoToPreviousChapter}"
                 Icon="Previous"

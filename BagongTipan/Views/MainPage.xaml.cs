@@ -66,7 +66,7 @@ namespace BagongTipan.UWP
             var tappedItem = (UIElement)e.OriginalSource;
 
             // Set highlight
-            VerseListView.SelectedIndex = VerseListView.Items.IndexOf((senderElement).DataContext);
+            //VerseListView.SelectedIndex = VerseListView.Items.IndexOf((senderElement).DataContext);
 
             var attachedFlyout = (MenuFlyout)FlyoutBase.GetAttachedFlyout(senderElement);
             attachedFlyout.ShowAt(tappedItem, e.GetPosition(tappedItem));
@@ -76,33 +76,33 @@ namespace BagongTipan.UWP
         private void BtnCopy_Click(object sender, RoutedEventArgs e)
         {
             DataPackage dataPackage = new DataPackage();
-            if (VerseListView.SelectedItems.Count != 0)
-            {
-                var selected = VerseListView.SelectedItem as BibliaElement;
-                string[] tobecombined = { selected.Libro, selected.Kabanata + ":" + selected.Index, selected.Verse, "\nhttp://bit.ly/2jo8VyD" };
-                dataPackage.SetText(String.Join(" ", tobecombined));
-                Clipboard.SetContent(dataPackage);
+            //if (VerseListView.SelectedItems.Count != 0)
+            //{
+            //    var selected = VerseListView.SelectedItem as BibliaElement;
+            //    string[] tobecombined = { selected.Libro, selected.Kabanata + ":" + selected.Index, selected.Verse, "\nhttp://bit.ly/2jo8VyD" };
+            //    dataPackage.SetText(String.Join(" ", tobecombined));
+            //    Clipboard.SetContent(dataPackage);
 
-                // Show in-app notification
-                int duration = 3000;
-                InAppNotif.Show(String.Join(" ", tobecombined), duration);
-            }
+            //    // Show in-app notification
+            //    int duration = 3000;
+            //    InAppNotif.Show(String.Join(" ", tobecombined), duration);
+            //}
         }       
 
         private void BtnShare_Click(object sender, RoutedEventArgs e)
         {
-            if (VerseListView.SelectedItems.Count != 0)
-            {
-                // Initiate Share
-                DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
-                dataTransferManager.DataRequested += DataTransferManager_DataRequested;
+            //if (VerseListView.SelectedItems.Count != 0)
+            //{
+            //    // Initiate Share
+            //    DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
+            //    dataTransferManager.DataRequested += DataTransferManager_DataRequested;
 
-                var selected = VerseListView.SelectedItem as BibliaElement;
-                string[] tobecombined = { selected.Libro, selected.Kabanata + ":" + selected.Index, selected.Verse, "\nhttp://bit.ly/2jo8VyD" };
-                ShareText = String.Join(" ", tobecombined);
-            }
+            //    var selected = VerseListView.SelectedItem as BibliaElement;
+            //    string[] tobecombined = { selected.Libro, selected.Kabanata + ":" + selected.Index, selected.Verse, "\nhttp://bit.ly/2jo8VyD" };
+            //    ShareText = String.Join(" ", tobecombined);
+            //}
 
-            DataTransferManager.ShowShareUI();
+            //DataTransferManager.ShowShareUI();
         }
         #endregion
 
@@ -113,8 +113,21 @@ namespace BagongTipan.UWP
        
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //VerseScroll.ScrollToVerticalOffset(0);
+            VerseScroll.ChangeView(0, 0, 1, false);
             //Animate
             FadeIn.Begin();
+        }
+
+        private void AppBarToggleButton_Click(object sender, RoutedEventArgs e)
+        {
+            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+        }
+
+        private void IndexListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //VerseScroll.ScrollToVerticalOffset(0);
+            VerseScroll.ChangeView(0, 0, 1, false);
         }
     }
 }
