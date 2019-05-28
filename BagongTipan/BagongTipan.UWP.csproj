@@ -132,6 +132,12 @@
     <Content Include="Assets\abt3clr.png" />
     <Content Include="Assets\BagongTipan.png" />
     <Content Include="Assets\BagongTipan2.png" />
+    <Content Include="Assets\clrArtboard 1%400.75x.png" />
+    <Content Include="Assets\LargeTile.scale-100.png" />
+    <Content Include="Assets\LargeTile.scale-125.png" />
+    <Content Include="Assets\LargeTile.scale-150.png" />
+    <Content Include="Assets\LargeTile.scale-200.png" />
+    <Content Include="Assets\LargeTile.scale-400.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-125.png" />
     <Content Include="Assets\SplashScreen.scale-150.png" />
