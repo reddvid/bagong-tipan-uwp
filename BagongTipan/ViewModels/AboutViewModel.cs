@@ -1,15 +1,10 @@
 ﻿using BagongTipan.UWP.Models;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Email;
 using Windows.Storage;
 using Windows.System;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace BagongTipan.UWP.ViewModels

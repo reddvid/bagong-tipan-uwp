@@ -209,10 +209,13 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AppCenter.Analytics">
-      <Version>2.0.0</Version>
+      <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.8</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Services.Store.Engagement">
+      <Version>10.1901.28001</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
       <Version>5.1.1</Version>
@@ -222,9 +225,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="Microsoft.Advertising.Xaml, Version=10.0">
-      <Name>Microsoft Advertising SDK for XAML</Name>
-    </SDKReference>
     <SDKReference Include="Microsoft.Services.Store.Engagement, Version=10.0">
       <Name>Microsoft Engagement Framework</Name>
     </SDKReference>
