@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -32,7 +33,7 @@ namespace BagongTipan.UWP
     public sealed partial class MainPage : Page
     {
         public static MainPage Current { get; private set; }
-        MainViewModel ViewModel { get; } = new MainViewModel();
+        public MainViewModel ViewModel { get; set; }
         DataRequest request;
         string ShareText { get; set; }
 
@@ -40,8 +41,7 @@ namespace BagongTipan.UWP
         {
             this.InitializeComponent();
 
-            Current = this;
-
+            ViewModel = new MainViewModel();
         }
 
         private void DataTransferManager_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
@@ -72,40 +72,6 @@ namespace BagongTipan.UWP
             attachedFlyout.ShowAt(tappedItem, e.GetPosition(tappedItem));
         }
 
-        #region FLYOUT METHODS
-        private void BtnCopy_Click(object sender, RoutedEventArgs e)
-        {
-            DataPackage dataPackage = new DataPackage();
-            //if (VerseListView.SelectedItems.Count != 0)
-            //{
-            //    var selected = VerseListView.SelectedItem as BibliaElement;
-            //    string[] tobecombined = { selected.Libro, selected.Kabanata + ":" + selected.Index, selected.Verse, "\nhttp://bit.ly/2jo8VyD" };
-            //    dataPackage.SetText(String.Join(" ", tobecombined));
-            //    Clipboard.SetContent(dataPackage);
-
-            //    // Show in-app notification
-            //    int duration = 3000;
-            //    InAppNotif.Show(String.Join(" ", tobecombined), duration);
-            //}
-        }       
-
-        private void BtnShare_Click(object sender, RoutedEventArgs e)
-        {
-            //if (VerseListView.SelectedItems.Count != 0)
-            //{
-            //    // Initiate Share
-            //    DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
-            //    dataTransferManager.DataRequested += DataTransferManager_DataRequested;
-
-            //    var selected = VerseListView.SelectedItem as BibliaElement;
-            //    string[] tobecombined = { selected.Libro, selected.Kabanata + ":" + selected.Index, selected.Verse, "\nhttp://bit.ly/2jo8VyD" };
-            //    ShareText = String.Join(" ", tobecombined);
-            //}
-
-            //DataTransferManager.ShowShareUI();
-        }
-        #endregion
-
         private void BtnAbout_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(AboutPage));
@@ -128,6 +94,11 @@ namespace BagongTipan.UWP
         {
             //VerseScroll.ScrollToVerticalOffset(0);
             VerseScroll.ChangeView(0, 0, 1, false);
+        }
+
+        private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Debug.WriteLine("This happened");
         }
     }
 }

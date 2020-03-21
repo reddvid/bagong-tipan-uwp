@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="32760RedDavid.TagalogBibleAngBagongTipan" Publisher="CN=3CB88423-4D53-4969-9486-DE9585CE29EF" Version="2.2.2.0" />
+  <Identity Name="32760RedDavid.TagalogBibleAngBagongTipanbeta" Publisher="CN=3CB88423-4D53-4969-9486-DE9585CE29EF" Version="2.2.2.0" />
   <mp:PhoneIdentity PhoneProductId="65ccd361-1a48-4bbb-affc-bd342d50c553" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Tagalog Bible (Ang Bagong Tipan)</DisplayName>

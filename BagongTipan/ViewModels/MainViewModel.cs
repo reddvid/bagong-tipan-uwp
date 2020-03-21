@@ -3,35 +3,63 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Windows.Storage;
 using Windows.UI.Composition;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 
 namespace BagongTipan.UWP.ViewModels
 {
-    class MainViewModel : ObservableObject
+    public class MainViewModel : ObservableObject
     {
-        public ObservableCollection<string> Books { get; private set; }
+        public ObservableCollection<string> BooksList { get; private set; }
         private int[] ChapterCount { get; set; }
+        private Biblia BibleData;
 
         public MainViewModel()
         {
-            LoadData();
+            var loadDataTask = Task.Run(async () =>
+            {
+                return await File.ReadAllTextAsync(@"DataBank.json");
+            });
 
-            var books = new Books();
+            var createBibleDataTask = loadDataTask.ContinueWith(t =>
+            {
+                string json = t.Result;
 
-            Books = books.BooksList;
-            ChapterCount = books.ChapterCount;
+                try
+                {
+                    var bibleData = JsonConvert.DeserializeObject<Biblia>(json);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+            }, TaskContinuationOptions.OnlyOnRanToCompletion);
 
-            LoadFontSettings();
+            Task.Run(() =>
+            {
+                BooksList = Books.BooksList;
+                ChapterCount = Books.ChapterCount;
+            });
 
-            LoadBookmarks();
+
+            //LoadFontSettings();
+            //LoadBookmarks();
         }
+
+        public async Task LoadData()
+        {
+
+        }
+
 
         private void LoadBookmarks()
         {
@@ -48,7 +76,7 @@ namespace BagongTipan.UWP.ViewModels
                 }
                 else
                 {
-                    SelectedBook = Books[0];
+                    SelectedBook = BooksList[0];
                 }
             }
         }
@@ -59,14 +87,7 @@ namespace BagongTipan.UWP.ViewModels
             if (roamingSettings.Containers.ContainsKey("settings") == true)
             {
                 var fontsize = roamingSettings.Containers["settings"].Values["fontsize"];
-                if (fontsize != null)
-                {
-                    FontSize = (int)fontsize;
-                }
-                else
-                {
-                    FontSize = 14;
-                }
+                FontSize = (fontsize != null) ? (int)fontsize : 14;
             }
         }
 
@@ -97,8 +118,11 @@ namespace BagongTipan.UWP.ViewModels
             get => _selectedBook;
             set
             {
-                Set(ref _selectedBook, value);
-                LoadChapters();
+                if (Set(ref _selectedBook, value))
+                {
+                    //LoadChapters();
+                    //RaisePropertyChanged(nameof(SelectedChapter));
+                }
             }
         }
 
@@ -141,10 +165,12 @@ namespace BagongTipan.UWP.ViewModels
             get => _selectedChapter;
             set
             {
-                Set(ref _selectedChapter, value);
-                LoadVerses();
-                CheckButtons();
-                RememberBookmarkSettings();
+                if (Set(ref _selectedChapter, value))
+                {
+                    //LoadVerses();
+                    //CheckButtons();
+                    //RememberBookmarkSettings();
+                }
             }
         }
 
@@ -152,7 +178,7 @@ namespace BagongTipan.UWP.ViewModels
         {
             IsLastChapter = IsFirstChapter = false;
 
-            int index = Books.IndexOf(Books.Where(p => p.Equals(SelectedBook)).FirstOrDefault());
+            int index = BooksList.IndexOf(BooksList.Where(p => p.Equals(SelectedBook)).FirstOrDefault());
             int count = ChapterCount[index];
 
             if (SelectedChapter == count.ToString())
@@ -216,7 +242,7 @@ namespace BagongTipan.UWP.ViewModels
         {
             Chapters.Clear();
 
-            int index = Books.IndexOf(Books.Where(p => p.Equals(SelectedBook)).FirstOrDefault());
+            int index = BooksList.IndexOf(BooksList.Where(p => p.Equals(SelectedBook)).FirstOrDefault());
             int count = ChapterCount[index];
             for (int c = 1; c <= count; c++)
             {
@@ -238,14 +264,14 @@ namespace BagongTipan.UWP.ViewModels
 
             for (int i = 0; i < items.Count(); i++)
             {
-                if (i <= (items.Count / 2) + 3)
-                {
-                    StringifiedContents += $"{Minify(items[i].Index)} {items[i].Verse}\n";
-                }
-                else
-                {
-                    StringifiedContentsOnColumnTwo += $"{Minify(items[i].Index)} {items[i].Verse}\n";
-                }
+                //if (i <= (items.Count / 2) + 3)
+                //{
+                StringifiedContents += $"{Minify(items[i].Index)} {items[i].Verse}\n";
+                //}
+                //else
+                //{
+                StringifiedContentsOnColumnTwo += $"{Minify(items[i].Index)} {items[i].Verse}\n";
+                //}
             }
 
             //foreach (var verse in BibleData.BibliaBiblia.Where(bookName => bookName.Libro == SelectedBook).Where(chapter => chapter.Kabanata == selectedChapterIndex))  //BibleData.Bible.Where(x => x.BookTitle == (SelectedBook)).Where(i => i.Chapter == selectedChapterIndex.ToString()))
@@ -336,16 +362,6 @@ namespace BagongTipan.UWP.ViewModels
             }
         }
 
-        private Biblia BibleData;
 
-        public void LoadData()
-        {
-            BibleData = null;
-            string json = null;
-
-            json = File.ReadAllText(@"DataBank.json");
-
-            BibleData = JsonConvert.DeserializeObject<Biblia>(json);
-        }
     }
 }
