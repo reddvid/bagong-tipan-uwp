@@ -241,6 +241,8 @@
     <Language Code="no-no" InMinimumRequirementSet="true" />
     <Language Code="nso" InMinimumRequirementSet="true" />
     <Language Code="nso-za" InMinimumRequirementSet="true" />
+    <Language Code="om" InMinimumRequirementSet="false" />
+    <Language Code="om-et" InMinimumRequirementSet="false" />
     <Language Code="or" InMinimumRequirementSet="true" />
     <Language Code="or-in" InMinimumRequirementSet="true" />
     <Language Code="pa" InMinimumRequirementSet="true" />
@@ -386,6 +388,7 @@
     <MainPackageIdentityName>32760RedDavid.ResistorDecode</MainPackageIdentityName>
     <MainPackageIdentityName>32760RedDavid.RFTools</MainPackageIdentityName>
     <MainPackageIdentityName>32760RedDavid.5652302639CAC</MainPackageIdentityName>
+    <MainPackageIdentityName>32760RedDavid.RPNNewsRadioPro</MainPackageIdentityName>
     <MainPackageIdentityName>32760RedDavid.SacredPrayer</MainPackageIdentityName>
     <MainPackageIdentityName>32760RedDavid.See-ThroughTiles</MainPackageIdentityName>
     <MainPackageIdentityName>32760RedDavid.SIMNetPH</MainPackageIdentityName>

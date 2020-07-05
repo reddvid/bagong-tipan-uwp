@@ -85,9 +85,9 @@ namespace BagongTipan.UWP.ViewModels
 
         public async void RateApp() => await Launcher.LaunchUriAsync(new Uri(string.Format("ms-windows-store:review?productid={0}", "9p4n369p108d")));
 
-        public async void OpenFacebook() => await Launcher.LaunchUriAsync(new Uri("http://www.facebook.com/reddvidapps/"));
+        public async void OpenFacebook() => await Launcher.LaunchUriAsync(new Uri("https://facebook.com/RedDavidGG/"));
 
-        public async void OpenTwitter() => await Launcher.LaunchUriAsync(new Uri("http://www.twitter.com/reddvid"));
+        public async void OpenTwitter() => await Launcher.LaunchUriAsync(new Uri("https://twitter.com/reddvid"));
 
         public async void Donate() => await Launcher.LaunchUriAsync(new Uri("https://paypal.me/reddvid/49"));
     }

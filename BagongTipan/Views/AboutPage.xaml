@@ -6,7 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:BagongTipan.UWP"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Background="{StaticResource CustomThemeBrush}"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    FontFamily="Assets/Cardo-Regular.ttf#Cardo"
     mc:Ignorable="d">
 
     <Page.Transitions>
@@ -24,7 +25,7 @@
             TrueValue="Visible" />
     </Page.Resources>
 
-    <Grid>
+    <Grid Padding="0,42,0,0">
         <Grid.ChildrenTransitions>
             <TransitionCollection>
                 <RepositionThemeTransition />
@@ -60,7 +61,7 @@
         <TextBlock
             Margin="24"
             HorizontalAlignment="Left"
-            FontFamily="Arial"
+            FontFamily="Assets/Cardo-Regular.ttf#Cardo"
             FontSize="40"
             FontWeight="Bold"
             Style="{ThemeResource TitleTextBlockStyle}"
@@ -88,15 +89,27 @@
                     <TextBlock
                         FontSize="11"
                         Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
-                        Text="Pagbabago ay magkakabisa sa susunod ng paglunsad ng app"
+                        Text="Pagbabago ay magkakabisa sa susunod ng pagbukas ng app"
                         Visibility="{x:Bind ViewModel.AppNeedsRestart, Mode=OneWay, Converter={StaticResource BoolToVis}}" />
                     <TextBlock Style="{StaticResource SubHeaderText}" Text="Feedback at mga suhestyon" />
                     <TextBlock Text="May mga mungkahi o reklamong tungkol sa app na nais mong ipaalam?" />
-                    <HyperlinkButton Click="{x:Bind ViewModel.SendFeedback}" Content="Mag-submit ng feedback" />
+                    <Button
+                        Click="{x:Bind ViewModel.SendFeedback}"
+                        Content="Mag-submit ng feedback"
+                        FontFamily="Assets/Cardo-Regular.ttf#Cardo"
+                        Style="{StaticResource AccentButtonStyle}" />
                     <TextBlock Style="{StaticResource SubHeaderText}" Text="Rate, review or share" />
                     <TextBlock Text="Nagustuhan mo ba itong app? Maglaan ng ilang sandali upang i-rebyu ang app sa Store o i-share sa iyong pamilya at mga kaibigan" />
-                    <HyperlinkButton Click="{x:Bind ViewModel.RateApp}" Content="I-rate ang app sa Store" />
-                    <HyperlinkButton Click="HyperBtnShare_Click" Content="I-share ang app" />
+                    <Button
+                        Click="{x:Bind ViewModel.RateApp}"
+                        Content="I-rate ang app sa Store"
+                        FontFamily="Assets/Cardo-Regular.ttf#Cardo"
+                        Style="{StaticResource AccentButtonStyle}" />
+                    <Button
+                        Click="HyperBtnShare_Click"
+                        Content="I-share ang app"
+                        FontFamily="Assets/Cardo-Regular.ttf#Cardo"
+                        Style="{StaticResource AccentButtonStyle}" />
                 </StackPanel>
 
                 <StackPanel
@@ -105,11 +118,23 @@
                     Spacing="12">
                     <TextBlock Style="{ThemeResource SubHeaderText}" Text="Social" />
                     <TextBlock Text="Maging &quot;updated&quot; sa mga balita tungkol sa app na ito o sa iba ko pang gawang mga app. Bisitahin lang ang aking Facebook page or Twitter profile" />
-                    <HyperlinkButton Click="{x:Bind ViewModel.OpenFacebook}" Content="I-like sa Facebook" />
-                    <HyperlinkButton Click="{x:Bind ViewModel.OpenTwitter}" Content="I-follow sa Twitter" />
+                    <Button
+                        Click="{x:Bind ViewModel.OpenFacebook}"
+                        Content="I-like sa Facebook"
+                        FontFamily="Assets/Cardo-Regular.ttf#Cardo"
+                        Style="{StaticResource AccentButtonStyle}" />
+                    <Button
+                        Click="{x:Bind ViewModel.OpenTwitter}"
+                        Content="I-follow sa Twitter"
+                        FontFamily="Assets/Cardo-Regular.ttf#Cardo"
+                        Style="{StaticResource AccentButtonStyle}" />
                     <TextBlock Style="{ThemeResource SubHeaderText}" Text="Donasyon" />
                     <TextBlock Text="Ang app na ito ay libre (unli trial). Kung nais mo akong suportahan sa paggawa ng mga app, maaari mong bilhin itong app o kaya'y magbigay abuloy sa PayPal. Kahit anong halaga ay malaking tulong na. Salamat at mabuhay ang Pilipino." />
-                    <HyperlinkButton Click="{x:Bind ViewModel.Donate}" Content="Mag-bigay donasyon sa PayPal.com" />
+                    <Button
+                        Click="{x:Bind ViewModel.Donate}"
+                        Content="Mag-bigay donasyon sa PayPal.com"
+                        FontFamily="Assets/Cardo-Regular.ttf#Cardo"
+                        Style="{StaticResource AccentButtonStyle}" />
                 </StackPanel>
             </Grid>
         </ScrollViewer>

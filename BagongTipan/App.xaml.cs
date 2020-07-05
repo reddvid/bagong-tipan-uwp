@@ -8,10 +8,14 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.System.Profile;
+using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -32,7 +36,7 @@ namespace BagongTipan.UWP
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
         public App()
-        {          
+        {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
 
@@ -140,6 +144,28 @@ namespace BagongTipan.UWP
             }
             // Ensure the current window is active
             Window.Current.Activate();
+
+            ExtendAcrylic();
+        }
+
+        private void ExtendAcrylic()
+        {
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.Xaml.Media.XamlCompositionBrushBase") && AnalyticsInfo.VersionInfo.DeviceFamily != "Windows.Mobile")
+            {
+                CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+                coreTitleBar.ExtendViewIntoTitleBar = true;
+
+                ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+                formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
+                formattableTitleBar.BackgroundColor = Colors.Transparent;
+                formattableTitleBar.ButtonHoverBackgroundColor = (RequestedTheme == ApplicationTheme.Light) ? Color.FromArgb(255, 200, 200, 200) : Color.FromArgb(255, 64, 64, 64);
+                formattableTitleBar.ButtonHoverForegroundColor = (RequestedTheme == ApplicationTheme.Light) ? Colors.Black : Colors.White;
+                formattableTitleBar.ButtonPressedBackgroundColor = Color.FromArgb(255, 119, 93, 29);
+                formattableTitleBar.ButtonForegroundColor = (RequestedTheme == ApplicationTheme.Light) ? Colors.Black : Colors.White;
+                formattableTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+                formattableTitleBar.InactiveBackgroundColor = Colors.Transparent;
+                formattableTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+            }
         }
 
         /// <summary>
