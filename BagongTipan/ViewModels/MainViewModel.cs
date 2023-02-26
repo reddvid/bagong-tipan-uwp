@@ -277,7 +277,6 @@ namespace BagongTipan.UWP.ViewModels
         public void DecreaseFont()
         {
             FontSize -= 2;
-
         }
 
         public void GoToPreviousChapter()
