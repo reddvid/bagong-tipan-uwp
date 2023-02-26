@@ -33,7 +33,16 @@ namespace BagongTipan.UWP.ViewModels
             LoadBookmarks();
         }
 
-        private void LoadBookmarks()
+		private Biblia BibleData { get; set; }
+
+		public void LoadData()
+		{
+            string json = File.ReadAllText(@"DataBank.json");
+
+			BibleData = JsonConvert.DeserializeObject<Biblia>(json);
+		}
+
+		private void LoadBookmarks()
         {
             var roamingSettings = ApplicationData.Current.RoamingSettings;
             if (roamingSettings.Containers.ContainsKey("settings") == true)
@@ -335,16 +344,6 @@ namespace BagongTipan.UWP.ViewModels
             }
         }
 
-        private Biblia BibleData;
-
-        public void LoadData()
-        {
-            BibleData = null;
-            string json = null;
-
-            json = File.ReadAllText(@"DataBank.json");
-
-            BibleData = JsonConvert.DeserializeObject<Biblia>(json);
-        }
+        
     }
 }
